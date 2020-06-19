@@ -6,7 +6,7 @@ import { HomePage } from "../HomePage";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
 
-const Main = (props) => {
+const Routes = (props) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -18,4 +18,4 @@ const Main = (props) => {
   );
 };
 
-export default withRouter(Main);
+export default withRouter(Routes);

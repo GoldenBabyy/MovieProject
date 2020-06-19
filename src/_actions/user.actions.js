@@ -2,7 +2,6 @@ import { userConstants } from "../_constants";
 import { userService } from "../_services";
 import { alertActions } from "./";
 import { history } from "../_helpers";
-import { browserHistory } from "react-router";
 
 export const userActions = {
   login,
@@ -18,7 +17,6 @@ function login(username, password) {
     userService.login(username, password).then(
       (user) => {
         dispatch(success(user));
-        history.push("/");
       },
       (error) => {
         dispatch(failure(error));

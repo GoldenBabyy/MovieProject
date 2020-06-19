@@ -1,0 +1,77 @@
+body {
+  background-color: #3d3d3d;
+  padding: 0px;
+}
+
+form {
+  display: inline-block;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.login {
+  overflow: hidden;
+  position: relative;
+  width: 400px;
+}
+
+label,
+input {
+  display: inline;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+label {
+  text-align: left;
+  justify-content: left;
+}
+
+.login input {
+  font-family: "Asap", sans-serif;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 16px;
+  background: white;
+  border: 0;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  line-height: 1.5;
+  margin-top: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: rgba(2, 128, 144, 1);
+}
+
+.btn:hover:before {
+  opacity: 0.5;
+}
+
+a {
+  text-decoration: none;
+  color: rgba(white, 0.6);
+  right: 10px;
+  bottom: 10px;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.alert {
+  text-align: center;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 0;
+}

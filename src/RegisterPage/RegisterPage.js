@@ -41,6 +41,7 @@ class RegisterPage extends React.Component {
     const { user } = this.state;
     if (user.firstName && user.lastName && user.username && user.password) {
       this.props.register(user);
+      this.props.history.push("/login");
     }
   }
 

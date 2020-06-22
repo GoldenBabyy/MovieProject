@@ -24,9 +24,10 @@ class LoginPage extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // history.listen((location, action) => {
-    //   this.props.clearAlerts();
-    // });
+
+    history.listen((location, action) => {
+      this.props.clearAlerts();
+    });
   }
 
   handleChange(e) {
@@ -41,7 +42,7 @@ class LoginPage extends React.Component {
     const { username, password } = this.state;
     if (username && password) {
       this.props.login(username, password);
-      this.props.history.push("/");
+      // this.props.history.push("/");
     }
   }
 

@@ -19,8 +19,24 @@ class HomePage extends React.Component {
       currentPage: 1,
       currentMovie: null,
       currentView: false,
+      nowPlaying: false,
     };
     this.apiKey = process.env.REACT_APP_API_KEY;
+
+    fetch(
+      "https://api.themoviedb.org/3/movie/now_playing?api_key=" +
+        this.apiKey +
+        "&language=en-US&page=1"
+    )
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({
+          movies: [...data.results],
+          totalResults: data.total_results,
+          nowPlaying: true,
+        });
+      });
   }
 
   componentDidMount() {
@@ -43,6 +59,7 @@ class HomePage extends React.Component {
           movies: [...data.results],
           totalResults: data.total_results,
           currentView: true,
+          nowPlaying: false,
         });
       });
   };
@@ -83,13 +100,16 @@ class HomePage extends React.Component {
   render() {
     const { user } = this.props;
     const numberPages = Math.floor(this.state.totalResults / 20);
+    console.log(this.state.movies);
     return (
       <div className="row">
         <Nav userName={user.firstName} />
 
         {this.state.currentMovie == null ? (
           <div className="col-lg-12 p-0 m-0">
-            {this.state.totalResults > 20 && this.state.currentMovie == null ? (
+            {this.state.totalResults > 20 &&
+            this.state.currentMovie == null &&
+            !this.state.nowPlaying ? (
               <Pagination
                 pages={numberPages}
                 nextPage={this.nextPage}

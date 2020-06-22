@@ -19,7 +19,7 @@ class App extends React.Component {
     const { alert } = this.props;
     return (
       <div>
-        <div className="center">
+        {/* <div className="center">
           {alert.message && (
             <div
               className={`col-4 center alert ${alert.type}`}
@@ -28,7 +28,7 @@ class App extends React.Component {
               {alert.message}
             </div>
           )}
-        </div>
+        </div> */}
         <Route />
       </div>
     );

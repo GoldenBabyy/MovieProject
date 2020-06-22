@@ -3,6 +3,10 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { userActions } from "../_actions";
+
+import { history } from "../_helpers";
+import { alertActions } from "../_actions";
+
 import "./login.css";
 
 class LoginPage extends React.Component {
@@ -20,6 +24,9 @@ class LoginPage extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    history.listen((location, action) => {
+      this.props.clearAlerts();
+    });
   }
 
   handleChange(e) {
@@ -39,10 +46,21 @@ class LoginPage extends React.Component {
   }
 
   render() {
+    const { alert } = this.props;
     const { loggingIn } = this.props;
     const { username, password, submitted } = this.state;
     return (
       <div className="center col-md-12 col-md-offset-3 text-white">
+        <div className="center">
+          {alert.message && (
+            <div
+              className={`col-4 center alert ${alert.type}`}
+              style={{ textAlign: "center" }}
+            >
+              {alert.message}
+            </div>
+          )}
+        </div>
         <h2>Account Login</h2>
         <form
           className="login bg-light p-3"
@@ -105,12 +123,14 @@ class LoginPage extends React.Component {
 
 function mapState(state) {
   const { loggingIn } = state.authentication;
-  return { loggingIn };
+  const { alert } = state;
+  return { alert, loggingIn };
 }
 
 const actionCreators = {
   login: userActions.login,
   logout: userActions.logout,
+  clearAlerts: alertActions.clear,
 };
 
 const connectedLoginPage = connect(mapState, actionCreators)(LoginPage);

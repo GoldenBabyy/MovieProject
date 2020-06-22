@@ -1,4 +1,4 @@
-import { authHeader } from "../_helpers";
+import { authHeader, history } from "../_helpers";
 
 export const userService = {
   login,
@@ -19,7 +19,6 @@ function login(username, password) {
     .then((user) => {
       // biar tetap login biarpun web refresh
       localStorage.setItem("user", JSON.stringify(user));
-
       return user;
     });
 }

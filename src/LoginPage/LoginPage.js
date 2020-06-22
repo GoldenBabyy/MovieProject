@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
     super(props);
 
     // reset login status
-    // this.props.logout();
+    this.props.logout();
 
     this.state = {
       username: "",
@@ -24,9 +24,9 @@ class LoginPage extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    history.listen((location, action) => {
-      this.props.clearAlerts();
-    });
+    // history.listen((location, action) => {
+    //   this.props.clearAlerts();
+    // });
   }
 
   handleChange(e) {

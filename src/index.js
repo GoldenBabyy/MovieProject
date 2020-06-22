@@ -8,6 +8,7 @@ import { App } from "./App";
 // setup fake backend
 import { configureFakeBackend } from "./_helpers";
 import { BrowserRouter } from "react-router-dom";
+
 configureFakeBackend();
 
 render(

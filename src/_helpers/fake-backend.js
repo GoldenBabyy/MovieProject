@@ -69,7 +69,7 @@ export function configureFakeBackend() {
 
             resolve({ ok: true, text: () => JSON.stringify(user) });
           } else {
-            reject("Unauthorised");
+            reject("Unauthorized");
           }
 
           return;

@@ -18,26 +18,24 @@ const MovieDetails = (props) => {
 
       <div className="col-sm-12 m8 text-white">
         <div className="info.container">
-          <p className="mr-3">
-            {props.currentMovie.poster_path == null ? (
-              <img
-                src={
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQFpKVUcVn3fiOjuwf5hLu56tIZtSE5HRjw7wQOEmFpWkbd1kWd&usqp=CAU"
-                }
-                alt="card image"
-              />
-            ) : (
-              <img
-                src={
-                  "http://image.tmdb.org/t/p/w185" +
-                  props.currentMovie.poster_path
-                }
-                alt="card image"
-                style={{ float: "left", marginRight: "15px" }}
-              />
-            )}
-            <h3> {props.currentMovie.title}</h3>
-          </p>
+          {props.currentMovie.poster_path == null ? (
+            <img
+              src={
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQFpKVUcVn3fiOjuwf5hLu56tIZtSE5HRjw7wQOEmFpWkbd1kWd&usqp=CAU"
+              }
+              alt="cardImage"
+            />
+          ) : (
+            <img
+              src={
+                "http://image.tmdb.org/t/p/w185" +
+                props.currentMovie.poster_path
+              }
+              alt="cardImage"
+              style={{ float: "left", marginRight: "15px" }}
+            />
+          )}
+          <h3> {props.currentMovie.title}</h3>
           <p></p>
 
           <hr size="500px" />

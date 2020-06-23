@@ -1,150 +1,163 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
-import { userActions } from "../_actions";
+import { Link } from "react-router-dom";
 
 import Nav from "./Navbar";
 import SearchBar from "./SearchBar";
 import MovieList from "./MovieList";
 import Pagination from "./Pagination";
 import MovieDetails from "./MovieDetails";
+import { movieActions } from "../_actions";
+import { history } from "../_helpers";
 
-class HomePage extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      movies: [],
-      searchTerm: "",
-      totalResults: 0,
-      currentPage: 1,
-      currentMovie: null,
-      currentView: false,
-      nowPlaying: false,
-    };
-    this.apiKey = process.env.REACT_APP_API_KEY;
+function HomePage({ user }, favs) {
+  // console.log("asd" + favs);
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [totalResults, setTotalResults] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentMovie, setCurrentMovie] = useState(null);
+  const [currentView, setCurrentView] = useState(false);
+  const [nowPlaying, setNowPlaying] = useState(false);
+  const apiKey = process.env.REACT_APP_API_KEY;
 
-    fetch(
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=" +
-        this.apiKey +
-        "&language=en-US&page=1"
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          movies: [...data.results],
-          totalResults: data.total_results,
-          nowPlaying: true,
-        });
-      });
+  const [buttonFavText, setButtonFavText] = useState("Favorite");
+  const [cobafav, setCobaFav] = useState([]);
+
+  async function fetchData(
+    url,
+    param,
+    nowPlayFlag,
+    currentViewFlag,
+    pageNumber
+  ) {
+    const res = await fetch(url + apiKey + param);
+
+    res
+      .json()
+      .then(
+        (res) => setMovies([...res.results]),
+        setTotalResults(res.total_results),
+        setNowPlaying(nowPlayFlag),
+        setCurrentView(currentViewFlag),
+        setCurrentPage(pageNumber)
+      );
   }
 
-  componentDidMount() {
-    this.props.dispatch(userActions.getAll());
-  }
+  useEffect(() => {
+    fetchData(
+      "https://api.themoviedb.org/3/movie/now_playing?api_key=",
+      "&language=en-US&page=1",
+      true,
+      false
+    );
+    console.log("a");
+  }, []);
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(
-      "https://api.themoviedb.org/3/search/movie?api_key=" +
-        this.apiKey +
-        "&query=" +
-        this.state.searchTerm
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          movies: [...data.results],
-          totalResults: data.total_results,
-          currentView: true,
-          nowPlaying: false,
-        });
-      });
+    console.log(searchTerm);
+    fetchData(
+      "https://api.themoviedb.org/3/search/movie?api_key=",
+      `&query= ${searchTerm}`,
+      false,
+      true
+    );
   };
 
-  handleChange = (e) => {
-    this.setState({ searchTerm: e.target.value });
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
-  nextPage = (pageNumber) => {
-    fetch(
-      "https://api.themoviedb.org/3/search/movie?api_key=" +
-        this.apiKey +
-        "&query=" +
-        this.state.searchTerm +
-        "&page=" +
-        pageNumber
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({ movies: [...data.results], currentPage: pageNumber });
-      });
+  const nextPage = (pageNumber) => {
+    fetchData(
+      "https://api.themoviedb.org/3/search/movie?api_key=",
+      `&query=${searchTerm}&page=${pageNumber}`,
+      false,
+      true,
+      pageNumber
+    );
   };
 
-  viewDetails = (id) => {
-    const filteredMovie = this.state.movies.filter((movie) => movie.id == id);
+  const viewDetails = (id) => {
+    const filteredMovie = movies.filter((movie) => movie.id == id);
 
     // Cek ada movienya atau ngga
     const newCurrentMovie = filteredMovie.length > 0 ? filteredMovie[0] : null;
-
-    this.setState({ currentMovie: newCurrentMovie });
+    setCurrentMovie(newCurrentMovie);
   };
 
-  closeDetails = () => {
-    this.setState({ currentMovie: null });
+  const closeDetails = () => {
+    setCurrentMovie(null);
   };
 
-  render() {
-    const { user } = this.props;
-    const numberPages = Math.floor(this.state.totalResults / 20);
-    console.log(this.state.movies);
-    return (
-      <div className="row">
-        <Nav userName={user.firstName} />
+  /////////////////////////////////////////////////////////////////////////////////////////////
 
-        {this.state.currentMovie == null ? (
-          <div className="col-lg-12 p-0 m-0">
-            {this.state.totalResults > 20 &&
-            this.state.currentMovie == null &&
-            !this.state.nowPlaying ? (
-              <Pagination
-                pages={numberPages}
-                nextPage={this.nextPage}
-                currentPage={this.state.currentPage}
-              />
-            ) : (
-              ""
-            )}
-            <SearchBar
-              handleSubmit={this.handleSubmit}
-              handleChange={this.handleChange}
+  const favButton = (title) => {
+    if (buttonFavText == "Favorite") {
+      setButtonFavText("UnFavorite");
+      movieActions.favorite(title);
+    } else {
+      setButtonFavText("Favorite");
+      movieActions.unFavorite(title);
+    }
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
+  const numberPages = Math.floor(totalResults / 20);
+  return (
+    <div className="row">
+      <Nav userName={user.firstName} />
+      <Link
+        to={{
+          pathname: "/favorite",
+          state: user.firstName,
+          movies: { cobafav },
+        }}
+        className="btn btn-link"
+      >
+        Favorite Menu
+      </Link>
+
+      {currentMovie == null ? (
+        <div className="col-lg-12 p-0 m-0">
+          {totalResults > 20 && currentMovie == null && !nowPlaying ? (
+            <Pagination
+              pages={numberPages}
+              nextPage={nextPage}
+              currentPage={currentPage}
             />
-            <MovieList
-              currentView={this.state.currentView}
-              viewDetails={this.viewDetails}
-              movies={this.state.movies}
-            />
-          </div>
-        ) : (
-          <MovieDetails
-            currentMovie={this.state.currentMovie}
-            closeDetails={this.closeDetails}
+          ) : (
+            ""
+          )}
+          <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
+          <MovieList
+            currentView={currentView}
+            viewDetails={viewDetails}
+            favButton={favButton}
+            movies={movies}
+            fav={buttonFavText}
           />
-        )}
-      </div>
-    );
-  }
+        </div>
+      ) : (
+        <MovieDetails currentMovie={currentMovie} closeDetails={closeDetails} />
+      )}
+    </div>
+  );
 }
 
 function mapStateToProps(state) {
-  const { users, authentication } = state;
+  // console.log(state);
+  const { users, authentication, movieReducer } = state;
   const { user } = authentication;
+  const { favs } = movieReducer;
+  console.log(favs);
   return {
     user,
     users,
+    favs,
   };
 }
 

@@ -1,8 +1,14 @@
-import React from "react";
-import { Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+
+import { Card, Button } from "react-bootstrap";
 import "./movieCard.css";
+import btn from "./button";
+import movieActions from "../_actions";
 
 const Movie = (props) => {
+  // console.log(props);
+
   return (
     <div className="col s12 m6 l3">
       <div className="wrapper">
@@ -23,8 +29,16 @@ const Movie = (props) => {
           <div className="descriptions">
             <h5>{props.title}</h5>
             <p style={{ textAlign: "justify" }}>{props.overview}</p>
+
             <button onClick={() => props.viewDetails(props.movieId)}>
               See Details
+            </button>
+
+            <button
+              style={{ float: "right" }}
+              onClick={() => props.favButton(props.title)}
+            >
+              {props.fav}
             </button>
           </div>
         </div>
@@ -33,4 +47,15 @@ const Movie = (props) => {
   );
 };
 
-export default Movie;
+function mapStateToProps(state) {
+  const { favs } = state;
+  // console.log(state.movieReducer.favs);
+  return {
+    favs,
+  };
+}
+
+export default connect(mapStateToProps)(Movie);
+// export { connected as Movie };
+
+// export default Movie;

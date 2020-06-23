@@ -1,48 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
-import { history } from "../_helpers";
-import { alertActions } from "../_actions";
-import Route from "./Route.js";
+import { store, configureFakeBackend } from "../_helpers";
+import Route from "./Route";
 import "../LoginPage/login.css";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const Root = () => (
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route />
+    </BrowserRouter>
+  </Provider>
+);
 
-    history.listen((location, action) => {
-      this.props.clearAlerts();
-    });
-  }
+export function App() {
+  configureFakeBackend();
 
-  render() {
-    const { alert } = this.props;
-    return (
-      <div>
-        {/* <div className="center">
-          {alert.message && (
-            <div
-              className={`col-4 center alert ${alert.type}`}
-              style={{ textAlign: "center" }}
-            >
-              {alert.message}
-            </div>
-          )}
-        </div> */}
-        <Route />
-      </div>
-    );
-  }
+  return <Root />;
 }
-
-function mapState(state) {
-  const { alert } = state;
-  return { alert };
-}
-
-const actionCreators = {
-  clearAlerts: alertActions.clear,
-};
-
-const connectedApp = connect(mapState, actionCreators)(App);
-export { connectedApp as App };

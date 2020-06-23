@@ -17,6 +17,8 @@ const MovieList = (props) => {
                   <Movie
                     key={i}
                     viewDetails={props.viewDetails}
+                    favButton={props.favButton}
+                    fav={props.fav}
                     movieId={movie.id}
                     image={movie.poster_path}
                     title={movie.title}

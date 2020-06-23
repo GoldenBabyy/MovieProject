@@ -5,21 +5,15 @@ const initialState = {
 };
 
 export function movieReducer(state = initialState, action) {
+  console.log("AA" + state.favs);
   switch (action.type) {
     case movieConstants.FAVORITE:
       return {
         itemMovie: [...state.favs, action.itemMovie],
       };
     case movieConstants.UNFAVORITE:
-      return state.filter((movie) => movie.id !== action.id);
+      return state.filter((movie) => movie.id !== action.itemMovie);
     default:
       return state;
   }
 }
-
-// const mapStateToProps = state =>{
-//   return
-// }
-
-// export default movieReducer;
-//

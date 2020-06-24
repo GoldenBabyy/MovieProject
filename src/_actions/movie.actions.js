@@ -5,17 +5,7 @@ export const favoriteMovieAction = (data) => ({
   },
 });
 
-export const getAllFavorite = () => ({
-  type: "GET_FAVORITE",
+export const removeFavorite = (data) => ({
+  type: "REMOVE_FAVORITE",
+  payload: data,
 });
-
-// export function unFavorite(id) {
-//   console.log("unfav " + id);
-
-//   return (dispatch) => {
-//     return dispatch({
-//       type: movieConstants.UNFAVORITE,
-//       itemMovie: id,
-//     });
-//   };
-// }

@@ -1,18 +1,7 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-
-import { Card, Button } from "react-bootstrap";
 import "./movieCard.css";
-import btn from "./button";
-import movieActions from "../_actions";
 
 const Movie = (props) => {
-  // console.log(props);
-  if (props.flagFav) {
-    console.log("aa");
-  } else {
-    console.log("nn");
-  }
   return (
     <div className="col s12 m6 l3">
       <div className="wrapper">
@@ -34,40 +23,42 @@ const Movie = (props) => {
             <h5>{props.title}</h5>
             <p style={{ textAlign: "justify" }}>{props.overview}</p>
 
-            <button onClick={() => props.viewDetails(props.movieId)}>
-              See Details
-            </button>
-
-            <button
-              style={{ float: "right", position: "relative" }}
-              // icon={favFlag ? "heart" : "heart outline"}
-              onClick={() =>
-                props.favButton({
-                  id: props.movieId,
-                  title: props.title,
-                  overview: props.overview,
-                  image: props.image,
-                })
-              }
-            >
-              {props.fav}
-            </button>
+            {props.flagFav ? (
+              <button
+                style={{ float: "right", position: "relative" }}
+                onClick={() =>
+                  props.unfavButton({
+                    id: props.movieId,
+                  })
+                }
+              >
+                Remove Favorite
+              </button>
+            ) : (
+              <span>
+                <button onClick={() => props.viewDetails(props.movieId)}>
+                  See Details
+                </button>
+                <button
+                  style={{ float: "right", position: "relative" }}
+                  onClick={() =>
+                    props.favButton({
+                      id: props.movieId,
+                      title: props.title,
+                      overview: props.overview,
+                      image: props.image,
+                    })
+                  }
+                >
+                  Add to Favorite
+                </button>
+              </span>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-// function mapStateToProps(state) {
-//   const { favs } = state;
-//   // console.log(state.movieReducer.favs);
-//   return {
-//     favs,
-//   };
-// }
-
-// export default connect(mapStateToProps)(Movie);
-// export { connected as Movie };
 
 export default Movie;

@@ -7,8 +7,7 @@ import SearchBar from "./SearchBar";
 import MovieList from "./MovieList";
 import Pagination from "./Pagination";
 import MovieDetails from "./MovieDetails";
-import { getAllFavorite } from "../_actions";
-import { favoriteMovieAction } from "../_actions";
+import { favoriteMovieAction, removeFavorite } from "../_actions";
 
 function HomePage({ user }, favs) {
   const [movies, setMovies] = useState([]);
@@ -89,25 +88,15 @@ function HomePage({ user }, favs) {
 
   const dispatch = useDispatch();
   const favButton = (movie) => {
-    // console.log(movie);
     dispatch(favoriteMovieAction(movie));
   };
 
-  // const favButton = (title) => {
-  //   if (buttonFavText == "Favorite") {
-  //     // setButtonFavText("UnFavorite");
-  //     favoriteMovieAction(title);
-  //     // movieActions.favoriteMovieAction(title);
-  //   } else {
-  //     setButtonFavText("Favorite");
-  //     movieActions.unFavorite(title);
-  //   }
-  // };
-
-  /////////////////////////////////////////////////////////////////////////////////////////////
+  const unfavButton = (id) => {
+    console.log("abc");
+    dispatch(removeFavorite(id));
+  };
 
   const favMovie = useSelector((state) => state.movieReducer);
-  console.log(favMovie);
   const numberPages = Math.floor(totalResults / 20);
   return (
     <div className="row">
@@ -118,6 +107,7 @@ function HomePage({ user }, favs) {
           state: user.firstName,
           viewDetails: { viewDetails },
           favButton: { favButton },
+          unfavButton: { unfavButton },
         }}
         className="btn btn-link"
       >
@@ -140,7 +130,8 @@ function HomePage({ user }, favs) {
             currentView={currentView}
             viewDetails={viewDetails}
             favButton={favButton}
-            // flagFav={favMovie}
+            favFlag={false}
+            unfavButton={unfavButton}
             movies={movies}
             fav={buttonFavText}
           />

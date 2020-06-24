@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import Nav from "../HomePage/Navbar";
 import FavoriteList from "./FavoriteList";
+import MovieList from "../HomePage/MovieList";
 
 export function FavoritePage(props) {
   console.log(props);
@@ -15,7 +16,12 @@ export function FavoritePage(props) {
       <Link to="/" className="btn btn-link">
         Home Menu
       </Link>
-      <FavoriteList favMovies={movie} />
+      <FavoriteList
+        favMovies={movie}
+        viewDetails={props.location.viewDetails}
+        favButton={props.location.favButton}
+        unfavButton={props.location.unfavButton}
+      />
     </div>
   );
 }

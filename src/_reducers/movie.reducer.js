@@ -1,9 +1,11 @@
+import { act } from "react-dom/test-utils";
+
 const initialState = {
   favs: [],
-  // flagFav: false,
 };
 
 export function movieReducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case "ADD_FAVORITE":
       let newFavorite = state.favs.concat({
@@ -23,11 +25,16 @@ export function movieReducer(state = initialState, action) {
         return {
           ...state,
           favs: newFavorite,
-          // flagFav: true,
         };
       }
+    case "REMOVE_FAVORITE":
+      const newFav = state.favs.filter((item) => item.id !== action.payload.id);
+
+      return {
+        ...state,
+        favs: newFav,
+      };
     default:
-      console.log("tes masuk default");
       return state;
   }
 }

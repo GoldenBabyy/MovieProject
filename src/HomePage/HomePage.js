@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Nav from "./Navbar";
@@ -7,11 +7,10 @@ import SearchBar from "./SearchBar";
 import MovieList from "./MovieList";
 import Pagination from "./Pagination";
 import MovieDetails from "./MovieDetails";
-import { movieActions } from "../_actions";
-import { history } from "../_helpers";
+import { getAllFavorite } from "../_actions";
+import { favoriteMovieAction } from "../_actions";
 
 function HomePage({ user }, favs) {
-  // console.log("asd" + favs);
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalResults, setTotalResults] = useState(0);
@@ -32,7 +31,6 @@ function HomePage({ user }, favs) {
     pageNumber
   ) {
     const res = await fetch(url + apiKey + param);
-
     res
       .json()
       .then(
@@ -51,13 +49,10 @@ function HomePage({ user }, favs) {
       true,
       false
     );
-    console.log("a");
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(searchTerm);
     fetchData(
       "https://api.themoviedb.org/3/search/movie?api_key=",
       `&query= ${searchTerm}`,
@@ -92,20 +87,27 @@ function HomePage({ user }, favs) {
     setCurrentMovie(null);
   };
 
-  /////////////////////////////////////////////////////////////////////////////////////////////
-
-  const favButton = (title) => {
-    if (buttonFavText == "Favorite") {
-      setButtonFavText("UnFavorite");
-      movieActions.favorite(title);
-    } else {
-      setButtonFavText("Favorite");
-      movieActions.unFavorite(title);
-    }
+  const dispatch = useDispatch();
+  const favButton = (movie) => {
+    // console.log(movie);
+    dispatch(favoriteMovieAction(movie));
   };
 
+  // const favButton = (title) => {
+  //   if (buttonFavText == "Favorite") {
+  //     // setButtonFavText("UnFavorite");
+  //     favoriteMovieAction(title);
+  //     // movieActions.favoriteMovieAction(title);
+  //   } else {
+  //     setButtonFavText("Favorite");
+  //     movieActions.unFavorite(title);
+  //   }
+  // };
+
   /////////////////////////////////////////////////////////////////////////////////////////////
 
+  const favMovie = useSelector((state) => state.movieReducer);
+  console.log(favMovie);
   const numberPages = Math.floor(totalResults / 20);
   return (
     <div className="row">
@@ -114,7 +116,8 @@ function HomePage({ user }, favs) {
         to={{
           pathname: "/favorite",
           state: user.firstName,
-          movies: { cobafav },
+          viewDetails: { viewDetails },
+          favButton: { favButton },
         }}
         className="btn btn-link"
       >
@@ -137,6 +140,7 @@ function HomePage({ user }, favs) {
             currentView={currentView}
             viewDetails={viewDetails}
             favButton={favButton}
+            // flagFav={favMovie}
             movies={movies}
             fav={buttonFavText}
           />
@@ -149,11 +153,9 @@ function HomePage({ user }, favs) {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
   const { users, authentication, movieReducer } = state;
   const { user } = authentication;
   const { favs } = movieReducer;
-  console.log(favs);
   return {
     user,
     users,

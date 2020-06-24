@@ -8,7 +8,11 @@ import movieActions from "../_actions";
 
 const Movie = (props) => {
   // console.log(props);
-
+  if (props.flagFav) {
+    console.log("aa");
+  } else {
+    console.log("nn");
+  }
   return (
     <div className="col s12 m6 l3">
       <div className="wrapper">
@@ -35,8 +39,16 @@ const Movie = (props) => {
             </button>
 
             <button
-              style={{ float: "right" }}
-              onClick={() => props.favButton(props.title)}
+              style={{ float: "right", position: "relative" }}
+              // icon={favFlag ? "heart" : "heart outline"}
+              onClick={() =>
+                props.favButton({
+                  id: props.movieId,
+                  title: props.title,
+                  overview: props.overview,
+                  image: props.image,
+                })
+              }
             >
               {props.fav}
             </button>
@@ -47,15 +59,15 @@ const Movie = (props) => {
   );
 };
 
-function mapStateToProps(state) {
-  const { favs } = state;
-  // console.log(state.movieReducer.favs);
-  return {
-    favs,
-  };
-}
+// function mapStateToProps(state) {
+//   const { favs } = state;
+//   // console.log(state.movieReducer.favs);
+//   return {
+//     favs,
+//   };
+// }
 
-export default connect(mapStateToProps)(Movie);
+// export default connect(mapStateToProps)(Movie);
 // export { connected as Movie };
 
-// export default Movie;
+export default Movie;

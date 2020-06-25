@@ -65,7 +65,7 @@ const MovieDetails = (props) => {
           </p>
         </div>
 
-        <div className="mt-4" style={{ position: "absolute" }}>
+        <div className="mt-4 mr-5" style={{ position: "absolute" }}>
           <h6>
             <b>Overview:</b>
           </h6>

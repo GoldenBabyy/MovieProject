@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./movieCard.css";
+import Button from "./Button";
 
 const Movie = (props) => {
   return (
@@ -23,25 +24,24 @@ const Movie = (props) => {
             <h5>{props.title}</h5>
             <p style={{ textAlign: "justify" }}>{props.overview}</p>
 
+            <Button
+              text={"See Details"}
+              click={() => props.viewDetails(props.movieId)}
+            />
             {props.flagFav ? (
-              <button
-                style={{ float: "right", position: "relative" }}
-                onClick={() =>
+              <Button
+                text={"Remove Favorite"}
+                click={() =>
                   props.unfavButton({
                     id: props.movieId,
                   })
                 }
-              >
-                Remove Favorite
-              </button>
+              />
             ) : (
               <span>
-                <button onClick={() => props.viewDetails(props.movieId)}>
-                  See Details
-                </button>
-                <button
-                  style={{ float: "right", position: "relative" }}
-                  onClick={() =>
+                <Button
+                  text={"Add Favorite"}
+                  click={() =>
                     props.favButton({
                       id: props.movieId,
                       title: props.title,
@@ -49,9 +49,7 @@ const Movie = (props) => {
                       image: props.image,
                     })
                   }
-                >
-                  Add to Favorite
-                </button>
+                />
               </span>
             )}
           </div>

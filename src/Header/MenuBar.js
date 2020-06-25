@@ -3,10 +3,12 @@ import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
+import red from "@material-ui/core/colors/red";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    background: "#FFFFFF",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -19,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 const options = ["Home", "Favorite"];
 
 export default function BarMenu(props) {
-  console.log(props);
   const classes = useStyles();
   const history = useHistory();
 

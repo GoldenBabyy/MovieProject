@@ -39,6 +39,7 @@ function HomePage({ user }, favs) {
         setCurrentView(currentViewFlag),
         setCurrentPage(pageNumber)
       );
+    console.log(res);
   }
 
   useEffect(() => {

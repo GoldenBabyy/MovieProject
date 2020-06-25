@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export function movieReducer(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case "ADD_FAVORITE":
       let newFavorite = state.favs.concat({

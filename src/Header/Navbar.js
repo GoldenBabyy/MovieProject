@@ -4,10 +4,20 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import BarMenu from "./MenuBar";
 import TitleBar from "./TitleBar";
 import ProfileBar from "./ProfileBar";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    background: "#ff1744",
+    position: "static",
+  },
+}));
 
 const Nav = (props) => {
+  const classes = useStyles();
   return (
-    <AppBar position="static">
+    <AppBar className={classes.root}>
       <Toolbar>
         <BarMenu
           userName={props.userName}
@@ -16,7 +26,7 @@ const Nav = (props) => {
           unfavButton={props.unfavButton}
           menu={props.menu}
         />
-        <TitleBar />
+        <TitleBar menu={props.menu} />
         <ProfileBar userName={props.userName} />
       </Toolbar>
     </AppBar>

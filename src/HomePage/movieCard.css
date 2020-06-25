@@ -105,6 +105,7 @@ body {
 }
 
 .pagination a {
+  width: fit-content;
   color: white;
   float: left;
   padding: 10px 16px;

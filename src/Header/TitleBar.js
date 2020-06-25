@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TitleBar() {
+export default function TitleBar(props) {
   const classes = useStyles();
 
   return (
@@ -22,7 +22,7 @@ export default function TitleBar() {
         className="d-inline-block align-top"
         alt="React logo"
       />
-      Movies
+      {props.menu}
     </Typography>
   );
 }

@@ -20,6 +20,7 @@ export default function btnFavorite(props) {
       setClassNames(classes.btn);
     }
   }, [props.text]);
+
   return (
     <Button
       variant="contained"

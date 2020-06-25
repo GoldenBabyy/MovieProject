@@ -24,10 +24,6 @@ const Movie = (props) => {
             <h5>{props.title}</h5>
             <p style={{ textAlign: "justify" }}>{props.overview}</p>
 
-            <Button
-              text={"See Details"}
-              click={() => props.viewDetails(props.movieId)}
-            />
             {props.flagFav ? (
               <Button
                 text={"Remove Favorite"}
@@ -39,6 +35,10 @@ const Movie = (props) => {
               />
             ) : (
               <span>
+                <Button
+                  text={"See Details"}
+                  click={() => props.viewDetails(props.movieId)}
+                />
                 <Button
                   text={"Add Favorite"}
                   click={() =>

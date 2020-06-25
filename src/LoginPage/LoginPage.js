@@ -39,7 +39,7 @@ function LoginPage(props) {
   const { alert } = props;
   const { loggingIn } = props;
   return (
-    <div className="center col-md-12 col-md-offset-3 text-white">
+    <div className="center col-md-12 text-white">
       <div className="center">
         {alert.message && (
           <div

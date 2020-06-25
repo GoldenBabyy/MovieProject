@@ -3,20 +3,19 @@ import Rating from "react-star-ratings";
 
 const MovieDetails = (props) => {
   return (
-    <div className="container-fluid text-white">
+    <div className="container-fluid text-white  m8 ">
       <div
         className="row"
         onClick={() => props.closeDetails()}
-        style={{ cursor: "pointer", paddingTop: 50 }}
+        style={{ cursor: "pointer", paddingTop: "20px" }}
       >
         <i className="fas fa-arrow-left"></i>
-        <span className="mb-3 ml-3">
-          {" "}
+        <span className="mb-2 ml-3">
           <b>Back</b>
         </span>
       </div>
 
-      <div className="col-sm-12 m8 text-white">
+      <div className="col-sm-12">
         <div className="info.container">
           {props.currentMovie.poster_path == null ? (
             <img
@@ -65,14 +64,13 @@ const MovieDetails = (props) => {
             <b>Jumlah Penonton:</b> {props.currentMovie.popularity} penonton
           </p>
         </div>
-      </div>
 
-      <div className="container-fluid row">
-        <h6>
-          <b>Overview:</b>
-        </h6>
-
-        <p style={{ textAlign: "justify" }}>{props.currentMovie.overview}</p>
+        <div className="mt-4" style={{ position: "absolute" }}>
+          <h6>
+            <b>Overview:</b>
+          </h6>
+          <p style={{ textAlign: "justify" }}>{props.currentMovie.overview}</p>
+        </div>
       </div>
     </div>
   );

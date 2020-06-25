@@ -25,6 +25,8 @@ export default function btnFavorite(props) {
     <Button
       variant="contained"
       color="secondary"
+      size="small"
+      style={{ fontSize: "14px" }}
       className={classNames}
       onClick={props.click}
     >

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import Nav from "./Navbar";
+import Nav from "../Header/Navbar";
 import SearchBar from "./SearchBar";
 import MovieList from "./MovieList";
 import Pagination from "./Pagination";
@@ -46,7 +46,8 @@ function HomePage({ user }, favs) {
       "https://api.themoviedb.org/3/movie/now_playing?api_key=",
       "&language=en-US&page=1",
       true,
-      false
+      false,
+      1
     );
   }, []);
 
@@ -54,9 +55,10 @@ function HomePage({ user }, favs) {
     e.preventDefault();
     fetchData(
       "https://api.themoviedb.org/3/search/movie?api_key=",
-      `&query= ${searchTerm}`,
+      `&query=${searchTerm}`,
       false,
-      true
+      true,
+      1
     );
   };
 
@@ -97,26 +99,22 @@ function HomePage({ user }, favs) {
   };
 
   const favMovie = useSelector((state) => state.movieReducer);
-  const numberPages = Math.floor(totalResults / 20);
+  const totalMovie = movies.length;
+  const numberPages = Math.floor(totalMovie / 10);
+
   return (
     <div className="row">
-      <Nav userName={user.firstName} />
-      <Link
-        to={{
-          pathname: "/favorite",
-          state: user.firstName,
-          viewDetails: { viewDetails },
-          favButton: { favButton },
-          unfavButton: { unfavButton },
-        }}
-        className="btn btn-link"
-      >
-        Favorite Menu
-      </Link>
+      <Nav
+        userName={user.firstName}
+        viewDetails={viewDetails}
+        favButton={favButton}
+        unfavButton={unfavButton}
+        menu={"Home"}
+      />
 
       {currentMovie == null ? (
         <div className="col-lg-12 p-0 m-0">
-          {totalResults > 20 && currentMovie == null && !nowPlaying ? (
+          {totalMovie > 10 && currentMovie == null && !nowPlaying ? (
             <Pagination
               pages={numberPages}
               nextPage={nextPage}

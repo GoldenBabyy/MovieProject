@@ -2,6 +2,7 @@ import React from "react";
 import Movie from "../HomePage/Movie";
 
 const FavoriteList = (props) => {
+  console.log(props);
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginTop: "250px" }}>
@@ -14,8 +15,8 @@ const FavoriteList = (props) => {
                 return (
                   <Movie
                     key={i}
-                    viewDetails={props.viewDetails.viewDetails}
-                    unfavButton={props.unfavButton.unfavButton}
+                    viewDetails={props.viewDetails}
+                    unfavButton={props.unfavButton}
                     fav={props.fav}
                     flagFav={true}
                     movieId={movie.id}

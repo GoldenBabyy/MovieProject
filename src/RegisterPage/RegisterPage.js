@@ -53,9 +53,6 @@ function RegisterPage(props) {
             onChange={handleChange}
             required
           />
-          {submitted && !user.firstName && (
-            <div className="help-block">First Name is required</div>
-          )}
         </div>
         <div
           className={
@@ -72,9 +69,6 @@ function RegisterPage(props) {
             onChange={handleChange}
             required
           />
-          {submitted && !user.lastName && (
-            <div className="help-block">Last Name is required</div>
-          )}
         </div>
         <div
           className={
@@ -91,9 +85,6 @@ function RegisterPage(props) {
             onChange={handleChange}
             required
           />
-          {submitted && !user.username && (
-            <div className="help-block">Username is required</div>
-          )}
         </div>
         <div
           className={
@@ -110,9 +101,6 @@ function RegisterPage(props) {
             onChange={handleChange}
             required
           />
-          {submitted && !user.password && (
-            <div className="help-block">Password is required</div>
-          )}
         </div>
         <div className="form-group">
           <button className="btn btn-primary">Register</button>

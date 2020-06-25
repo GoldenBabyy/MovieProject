@@ -17,6 +17,7 @@ const MovieList = (props) => {
                     viewDetails={props.viewDetails}
                     favButton={props.favButton}
                     fav={props.fav}
+                    flagfav={false}
                     movieId={movie.id}
                     image={movie.poster_path}
                     title={movie.title}

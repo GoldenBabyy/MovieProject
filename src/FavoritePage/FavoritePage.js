@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 import Nav from "../Header/Navbar";
 import FavoriteList from "./FavoriteList";
-import MovieList from "../HomePage/MovieList";
 
 export function FavoritePage(props) {
   const movie = useSelector((state) => state.movieReducer);

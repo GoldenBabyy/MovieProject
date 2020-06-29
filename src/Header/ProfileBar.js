@@ -24,12 +24,7 @@ export default function ProfileBar(props) {
     <div>
       <Typography variant="subtitle1" className={classes.title}>
         Hi, {props.userName} !
-        <Button
-          className="ml-3"
-          color="link"
-          variant="outlined"
-          onClick={btnLogout}
-        >
+        <Button className="ml-3" variant="outlined" onClick={btnLogout}>
           {/* Logout */}
           <ExitToAppIcon />
         </Button>

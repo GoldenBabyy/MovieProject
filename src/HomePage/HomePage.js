@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 import Nav from "../Header/Navbar";
 import SearchBar from "./SearchBar";
@@ -10,6 +9,7 @@ import MovieDetails from "./MovieDetails";
 import { favoriteMovieAction, removeFavorite } from "../_actions";
 
 function HomePage({ user }, favs) {
+  console.log(user);
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalResults, setTotalResults] = useState(0);
@@ -21,6 +21,11 @@ function HomePage({ user }, favs) {
 
   const [buttonFavText, setButtonFavText] = useState("Favorite");
   const [cobafav, setCobaFav] = useState([]);
+  const dispatch = useDispatch();
+
+  const favMovie = useSelector((state) => state.movieReducer);
+  const totalMovie = movies.length;
+  const numberPages = Math.floor(totalMovie / 10);
 
   async function fetchData(
     url,
@@ -89,7 +94,6 @@ function HomePage({ user }, favs) {
     setCurrentMovie(null);
   };
 
-  const dispatch = useDispatch();
   const favButton = (movie) => {
     dispatch(favoriteMovieAction(movie));
   };
@@ -98,10 +102,6 @@ function HomePage({ user }, favs) {
     console.log("abc");
     dispatch(removeFavorite(id));
   };
-
-  const favMovie = useSelector((state) => state.movieReducer);
-  const totalMovie = movies.length;
-  const numberPages = Math.floor(totalMovie / 10);
 
   return (
     <div className="row">

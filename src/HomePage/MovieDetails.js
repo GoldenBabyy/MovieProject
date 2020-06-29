@@ -1,5 +1,6 @@
 import React from "react";
 import Rating from "react-star-ratings";
+// import Rating from "@material-ui/lab";
 
 const MovieDetails = (props) => {
   return (
@@ -64,7 +65,7 @@ const MovieDetails = (props) => {
             <b>Jumlah Penonton:</b> {props.currentMovie.popularity} penonton
           </p>
         </div>
-
+        <br></br>
         <div className="mt-4 mr-5" style={{ position: "absolute" }}>
           <h6>
             <b>Overview:</b>

@@ -2,7 +2,6 @@ import React from "react";
 import Movie from "../HomePage/Movie";
 
 const FavoriteList = (props) => {
-  console.log(props);
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginTop: "250px" }}>
@@ -13,17 +12,30 @@ const FavoriteList = (props) => {
             <div className="col-sm-12">
               {props.favMovies.favs.map((movie, i) => {
                 return (
-                  <Movie
-                    key={i}
-                    viewDetails={props.viewDetails}
-                    unfavButton={props.unfavButton}
-                    fav={props.fav}
-                    flagFav={true}
-                    movieId={movie.id}
-                    image={movie.image}
-                    title={movie.title}
-                    overview={movie.overview}
-                  />
+                  <div key={i}>
+                    {props.favMovies.rate.map((rating, j) => {
+                      return (
+                        <>
+                          {movie.id == rating.id ? (
+                            <Movie
+                              key={j}
+                              viewDetails={props.viewDetails}
+                              unfavButton={props.unfavButton}
+                              fav={props.fav}
+                              flagFav={true}
+                              movieId={movie.id}
+                              image={movie.image}
+                              title={movie.title}
+                              overview={movie.overview}
+                              rating={movie.id == rating.id ? rating.rating : 0}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      );
+                    })}
+                  </div>
                 );
               })}
             </div>

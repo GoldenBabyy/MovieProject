@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import { PrivateRoute } from "../_components";
 import { HomePage } from "../HomePage";
@@ -12,12 +13,27 @@ const Routes = (props) => {
     <BrowserRouter>
       <Switch>
         <PrivateRoute exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route exact path="/favorite" component={FavoritePage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/favorite" component={FavoritePage} />
       </Switch>
     </BrowserRouter>
   );
 };
 
-export default withRouter(Routes);
+function mapStateToProps(state) {
+  const { users, authentication, movieReducer } = state;
+  const { user } = authentication;
+  const { favs } = movieReducer;
+  return {
+    user,
+    users,
+    favs,
+  };
+}
+
+const connectedHomePage = connect(mapStateToProps)(Routes);
+export { connectedHomePage as Routes };
+export default Routes;
+
+// export default withRouter(Routes);
